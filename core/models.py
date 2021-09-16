@@ -1,5 +1,5 @@
 # This a file with all object models
-from calculadora_panel_solar.adapters.home_appliances_adapter import HomeAppliancesAdapter
+from adapters.home_appliances_adapter import HomeAppliancesAdapter
 
 
 class HomeAppliance(HomeAppliancesAdapter):
@@ -17,8 +17,11 @@ class HomeAppliance(HomeAppliancesAdapter):
     def __init__(
             self,
             consumption: int,
+            consumptions_hour: int,
             power_factor_type: str = "A",
-            qty: int = 1):
+            qty: int = 1
+            ):
+        self.consumptions_hour = consumptions_hour
         self.power_factor_type = power_factor_type.upper()
         self.consumption = consumption
         self.qty = qty
