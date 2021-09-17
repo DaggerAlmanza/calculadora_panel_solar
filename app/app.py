@@ -7,9 +7,10 @@ app = Flask(__name__)
 @app.route('/electrodomesticos', methods=['POST'])
 def electrodomesticos():
     data = request.get_json()
+    sum_consumptions: float = 0
     for iter_number in range(len(data["homeAppliaces"])):
         household_appliance = HomeAppliance(
                             **data["homeAppliaces"][iter_number])
-        sum_consumptions = household_appliance.get_consume()
+        sum_consumptions += household_appliance.get_consume()
 
     return jsonify({'Consumo Total': sum_consumptions})
