@@ -8,17 +8,16 @@
 </head>
 <body>
     <h1>Calculadora</h1>
-    <form method="POST"  >
-        <!-- action="electrodomestco.html"  -->
-        <ul>
-        <li> Electrodoméstico <input type="text" name="electrodomestico" placeholder="Electrodoméstico" required> </li>
-        <li> Consumo <input type="text" name="consumo" placeholder="Consumo por hora" required></li>
-        <li> Cantidad <input type="text" name="cantidad" placeholder="Cantidad de electrodoméstico en la casa" required></li>
-        <li> Categoría <input type="text" name="categoria" placeholder="Categoría 'A,B,C,D,E,F,G'" required></li>
-        <li> Horas <input type="text" name="horas" placeholder="Cuantas horas encendido" required></li>
+    <!-- action="electrodomesticos" -->
+    <form method="POST" > 
+        {{ formulario.hidden_tag() }}
+        {{ formulario.electrodomestico.label }} {{ formulario.electrodomestico }}
+        {{ formulario.consumo.label }} {{ formulario.consumo }}
+        {{ formulario.cantidad.label }} {{ formulario.cantidad }}
+        {{ formulario.categoria.label }} {{ formulario.categoria }}
+        {{ formulario.horas.label }} {{ formulario.horas }}
         <br>
-        <input type="submit" name="enviado" value="Enviar">
-        </ul>
-    </form>
+        {{ formulario.boton }}
+     </form>
 </body>
 </html>
