@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 
@@ -16,17 +16,16 @@ class Formulario(FlaskForm):
     boton = SubmitField("Enviar")
 
 
-def form_json(formulario) -> dict:
-    return {
-            "homeAppliances": [
+def form_json(formulario) -> list:
+    return [
                 {
+                    "electrodomestico": formulario.electrodomestico.data,
                     "consumption": formulario.consumo.data,
                     "consumptions_hour": formulario.horas.data,
                     "power_factor_type": formulario.categoria.data,
                     "qty": formulario.cantidad.data
                 }
             ]
-        }
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -43,3 +42,15 @@ def mensaje():
 
 # if __name__ == "__main__":
 #     app.run(debug=True)
+"""
+{
+            "homeAppliances": [
+                {
+                    "consumption": formulario.consumo.data,
+                    "consumptions_hour": formulario.horas.data,
+                    "power_factor_type": formulario.categoria.data,
+                    "qty": formulario.cantidad.data
+                }
+            ]
+        }
+"""
