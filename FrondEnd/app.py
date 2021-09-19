@@ -17,40 +17,29 @@ class Formulario(FlaskForm):
 
 
 def form_json(formulario) -> list:
-    return [
-                {
+    return {
                     "electrodomestico": formulario.electrodomestico.data,
                     "consumption": formulario.consumo.data,
                     "consumptions_hour": formulario.horas.data,
                     "power_factor_type": formulario.categoria.data,
                     "qty": formulario.cantidad.data
                 }
-            ]
 
 
 @app.route("/", methods=["GET", "POST"])
 def mensaje():
+    valor: list = []
     formulario = Formulario()
     if formulario.validate_on_submit():
         flash("Gracias por pulsar este botón")
         valores = form_json(formulario)
-        return render_template("datos.html", valores=valores)
+        valor.append(valores)
+        longitud = len(valor)
+        return render_template(
+                                "datos.html",
+                                valores=valores,
+                                valor=valor,
+                                longitud=longitud)
     return render_template(
         "index.html", formulario=formulario
                           )
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
-"""
-{
-            "homeAppliances": [
-                {
-                    "consumption": formulario.consumo.data,
-                    "consumptions_hour": formulario.horas.data,
-                    "power_factor_type": formulario.categoria.data,
-                    "qty": formulario.cantidad.data
-                }
-            ]
-        }
-"""
