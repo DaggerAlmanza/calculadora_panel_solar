@@ -26,7 +26,20 @@
         Eletrodomestico: <input type="text" name="eletrodomestico" placeholder="Nombre" required>
         Consumo: <input type="text" name="consumo" placeholder="Consumo en Kw" required>
         Horas: <input type="text" name="horas" placeholder="Tipo de uso diario" required>
-        <b><input type="button" name="agregar" value="+" class="agregar"></b>
+        <button onclick="agregarElectrodomestico()" class="agregar">+</button>
+        
+
+        <!-- push() 		- agregar un elemento		platillos.push("tostada");
+        pop() 		- elimina el ultimo elemento		platillos.pop(); 
+        electrodomestico: , consumption: consumo, consumptions_hour: , power_factor_type: , qty: -->
     </form>
 </body>
+<script>
+    function agregarElectrodomestico() {
+        var consumoE = document.getElementById("consumo").value;
+
+        var elec = { consumption: consumoE};
+        alert(consumoE);
+    }
+</script>
 </html>
