@@ -5,22 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomeApplience</title>
+    <style>
+        .agregar {
+          background-color: #0446fd;
+          border: none;
+          color: white;
+          padding: 8px 6px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 2px 1px;
+          cursor: pointer;
+        }
+        </style>
 </head>
 <body>
-
     <h1>Calculadora</h1>
-    <!-- action="electrodomesticos" -->
-    <form method="POST" > 
-        {{ formulario.hidden_tag() }}
-        {{ formulario.electrodomestico.label }} {{ formulario.electrodomestico }}
-        {{ formulario.consumo.label }} {{ formulario.consumo }}
-        {{ formulario.cantidad.label }} {{ formulario.cantidad }}
-        {{ formulario.categoria.label }} {{ formulario.categoria }}
-        {{ formulario.horas.label }} {{ formulario.horas }}
-        <br>
-        {{ formulario.boton }}
-        <br>
-
+    <form action="">
+        Eletrodomestico: <input type="text" name="eletrodomestico" placeholder="Nombre" required>
+        Consumo: <input type="text" name="consumo" placeholder="Consumo en Kw" required>
+        Horas: <input type="text" name="horas" placeholder="Tipo de uso diario" required>
+        <b><input type="button" name="agregar" value="+" class="agregar"></b>
     </form>
 </body>
 </html>
