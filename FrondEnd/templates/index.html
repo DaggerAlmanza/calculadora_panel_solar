@@ -21,25 +21,23 @@
         </style>
 </head>
 <body>
+    <div>
     <h1>Calculadora</h1>
-    <form action="">
+    <form action="" method="GET">
         Eletrodomestico: <input type="text" name="eletrodomestico" placeholder="Nombre" required>
-        Consumo: <input type="text" name="consumo" placeholder="Consumo en Kw" required>
-        Horas: <input type="text" name="horas" placeholder="Tipo de uso diario" required>
-        <button onclick="agregarElectrodomestico()" class="agregar">+</button>
         
-
-        <!-- push() 		- agregar un elemento		platillos.push("tostada");
-        pop() 		- elimina el ultimo elemento		platillos.pop(); 
-        electrodomestico: , consumption: consumo, consumptions_hour: , power_factor_type: , qty: -->
+        <button class="agregar" id="boton">+</button>
+        
     </form>
-</body>
-<script>
-    function agregarElectrodomestico() {
-        var consumoE = document.getElementById("consumo").value;
+    </div>
 
-        var elec = { consumption: consumoE};
-        alert(consumoE);
-    }
-</script>
+    <thead>
+        <tr>Eletrodomestico</tr>
+    </thead>
+    <tbody id="elementos">
+
+    </tbody>
+    <script src="consola.js"></script>
+</body>
+
 </html>
