@@ -1,4 +1,6 @@
-// console.log("Correcto")
+console.log("Correcto")
+
+document.querySelector("#boton").addEventListener("click", traerDatos);
 
 function ele(eletrodomesticoF) {
     this.eletrodomesticoF = eletrodomesticoF;
@@ -7,33 +9,22 @@ function ele(eletrodomesticoF) {
 function traerDatos(){
     console.log("en la funcion")
     var eletrodomesticoE = document.getElementsByName("eletrodomestico")[0].value;
-
+    document.getElementById("elementos").innerHTML = eletrodomesticoE
+    console.log(eletrodomesticoE)
+    alert(eletrodomesticoE);
+    
     var elec = new ele(eletrodomesticoE);
     alert(elec.eletrodomesticoF);
+    
+    let elemento = document.querySelector("elementos");
+    elemento.innerHTML = <td>${eletrodomesticoE}</td>
 
-    const xhttp = new XMLHttpRequest();
-    const url = "http://127.0.0.1:5500/FrondEnd/templates/index.html"
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
-            document.getElementById("elementos").innerHTML = this.responseText;
-        }
-    }
-
-    xhttp.open("GET", url);
-    xhttp.send();
-
-    document.querySelector("#boton").addEventListener("click", function(){
-        traerDatos();
-    });
-    let elemento = document.querySelector("#elementos");
-    elemento.innerHTML = "" ;
-
-    for(let elem of elec){
-        elemento.innerHTML += `
-        <tr>
-            <td>${elem.eletrodomesticoF}</td>
-        </tr>
-    `     
-    }
+    // for(let elem of elec){
+    //     elemento.innerHTML += `
+    //     <tr>
+    //         <td>${id="mostrar"}</td>
+    //     </tr>
+    // `     
+    // }
 }
+
