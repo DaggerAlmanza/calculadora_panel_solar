@@ -16,15 +16,8 @@ function traerDatos(){
     var elec = new ele(eletrodomesticoE);
     alert(elec.eletrodomesticoF);
     
-    let elemento = document.querySelector("elementos");
-    elemento.innerHTML = <td>${eletrodomesticoE}</td>
+    let elemento = document.querySelector("elementos")
 
-    // for(let elem of elec){
-    //     elemento.innerHTML += `
-    //     <tr>
-    //         <td>${id="mostrar"}</td>
-    //     </tr>
-    // `     
-    // }
+
 }
 

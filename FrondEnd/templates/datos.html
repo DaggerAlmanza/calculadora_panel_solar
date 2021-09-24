@@ -1,13 +1,16 @@
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>HomeAppliance</title>
 </head>
 <body>
     <div class="row" id="divCalculator">
-        <input type="button" onclick="addElement()" value="+">
+        <div>
+            Agregar eletrodomestico: <input type="button" onclick="addElement()" value="+">
+        </div>
+        
     </div>
 </body>
 <script>
@@ -42,6 +45,7 @@
         categorySelect.id = "category_"+id
         timeInput.id = "time_"+id
 
+
         // Establecemos los valores del select
         categoryList = {
             "A": 0.95,
@@ -67,6 +71,20 @@
         currentDiv.appendChild(timeInput);
 
         // añade el elemento creado y su contenido al DOM
+        var jsonEnvio = []
+        for (var i = 1; i <= id; i++) {
+            
+            jsonEnvio.push({
+                "consumption": document.getElementById("consumption_"+i).value,
+                "consumptions_hour": document.getElementById("time_"+i).value,
+                "power_factor_type": document.getElementById("category_"+i).value,
+                "qty": document.getElementById("quantity_"+i).value
+            });
+            console.log(jsonEnvio[0])
+        }
+                    
+
+
     }
 </script>
 </html>
