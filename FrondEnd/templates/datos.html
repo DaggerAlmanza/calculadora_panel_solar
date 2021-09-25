@@ -6,10 +6,11 @@
     <title>HomeAppliance</title>
 </head>
 <body>
-    <div class="row" id="divCalculator">
-        <div>
+    <div>
+        <div class="row" id="divCalculator">
             Agregar eletrodomestico: <input type="button" onclick="addElement()" value="+">
         </div>
+        <input type="submit" onclick="endElement()" value="Calcular" action="http://127.0.0.1:5000/electrodomesticos" method="POST">
         
     </div>
 </body>
@@ -71,6 +72,10 @@
         currentDiv.appendChild(timeInput);
 
         // añade el elemento creado y su contenido al DOM
+        
+    } 
+        
+    function endElement(jsonEnvio) {
         var jsonEnvio = []
         for (var i = 1; i <= id; i++) {
             
@@ -80,11 +85,16 @@
                 "power_factor_type": document.getElementById("category_"+i).value,
                 "qty": document.getElementById("quantity_"+i).value
             });
-            console.log(jsonEnvio[0])
+            } 
+            
+        console.log(jsonEnvio)
+        return({
+                "homeAppliances": jsonEnvio
+                })
+
+
         }
-                    
 
-
-    }
+    
 </script>
 </html>
