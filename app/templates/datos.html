@@ -10,7 +10,12 @@
         <div class="row" id="divCalculator">
             Agregar eletrodomestico: <input type="button" onclick="addElement()" value="+">
         </div>
-        <input type="submit" onclick="endElement()" value="Calcular" action="/electrodomesticos" method="POST">
+        
+        <form action="/electrodomesticos" method="POST">
+            
+            <input type="submit" onclick="endElement()" value="Calcular">
+        </form>
+        
         <div>
             <h3>{{ sum_consumptions }}</h3>
         </div>
@@ -83,22 +88,25 @@
         for (var i = 1; i <= id; i++) {
             
             jsonEnvio.push({
-                "consumption": document.getElementById("consumption_"+i).value,
-                "consumptions_hour": document.getElementById("time_"+i).value,
-                "power_factor_type": document.getElementById("category_"+i).value,
+                "consumption": Number(document.getElementById("consumption_"+i).value),
+                "consumptions_hour": Number(document.getElementById("time_"+i).value),
+                "power_factor_type": Number(document.getElementById("category_"+i).value),
                 "qty": document.getElementById("quantity_"+i).value
             });
             } 
-            
-        console.log({
+        
+        var envioJson = JSON.parse({
                 "homeAppliances": jsonEnvio
                 })
-        return{
-                "homeAppliances": jsonEnvio
-                }
-
+                
+        console.log(envioJson)
+        alert(envioJson);
+        // var xhr = new XMLHttpRequest();
+        // xhr.open(form.method, form.action, true);
+        // xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        // xhr.send(envioJson)
+        
         }
 
-    
 </script>
 </html>
