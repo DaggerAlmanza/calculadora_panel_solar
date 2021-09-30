@@ -11,11 +11,12 @@
             Agregar eletrodomestico: <input type="button" onclick="addElement()" value="+">
         </div>
         
-        <form action="/electrodomesticos" method="POST">
-            
-            <input type="submit" onclick="endElement()" value="Calcular">
+        <form action="{{url_for('electrodomesticos')}}" method="POST">
+            <input type="hidden" id="resultInput">
+
         </form>
-        
+
+        <input type="submit" onclick="endElement()" value="Calcular">
         <div>
             <h3>{{ sum_consumptions }}</h3>
         </div>
@@ -91,21 +92,29 @@
                 "consumption": Number(document.getElementById("consumption_"+i).value),
                 "consumptions_hour": Number(document.getElementById("time_"+i).value),
                 "power_factor_type": Number(document.getElementById("category_"+i).value),
-                "qty": document.getElementById("quantity_"+i).value
+                "qty": Number( document.getElementById("quantity_"+i).value)
             });
             } 
-        
-        var envioJson = JSON.parse({
+        var envioJson = JSON.stringify({
                 "homeAppliances": jsonEnvio
-                })
+                });
                 
-        console.log(envioJson)
-        alert(envioJson);
-        // var xhr = new XMLHttpRequest();
-        // xhr.open(form.method, form.action, true);
-        // xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        // xhr.send(envioJson)
-        
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Basic QWRtaW46MTIzNDU=");
+
+        var raw = envioJson;
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch("http://127.0.0.1:5000/electrodomesticos", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
         }
 
 </script>
