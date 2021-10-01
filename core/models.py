@@ -22,6 +22,7 @@ class HomeAppliance(HomeAppliancesAdapter):
         power_factor = power_factor_type
         return power_factor
 
-    def get_consume(self):
+    def get_consume(self) -> float:
         power_factor = self.__get_power_factor_type__(self.power_factor_type)
-        return self.consumption * self.qty / power_factor
+        consumption_daily = self.consumption * self.qty / power_factor
+        return consumption_daily

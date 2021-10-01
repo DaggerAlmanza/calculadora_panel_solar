@@ -7,16 +7,37 @@ app = Flask(__name__)
 
 @app.route("/")
 def portada():
-    return render_template("datos.html", sum_consumptions=0)
+    """
+    Abrimos nuestra página principal 
+    """
+    return render_template("datos.html")
 
 
-@app.route('/electrodomesticos', methods=['POST'])
-def electrodomesticos():
+@app.route("/Homeappliances", methods=["POST"])
+def home_appliances() -> json:
+    """
+    Recibimos un json con la siguiente estructura:
+    {
+        "homeAppliances":
+        [
+            {
+                "consumption": 40,
+                "consumptions_hour": 3,
+                "power_factor_type": 0.85,
+                "qty": 3
+            }, + dict 
+        ]	
+    }
+    , procesamos la información y devolvemos un json.
+
+    """
     if request.method == "POST":
         home_appliances = request.get_json()
         sum_consumptions: float = 0
         for home_appliance in home_appliances["homeAppliances"]:
             household_appliance = HomeAppliance(**home_appliance)
             sum_consumptions += household_appliance.get_consume()
-    return Response(json.dumps({"consumptions": sum_consumptions}), mimetype="application/json") 
-# jsonify({'Consumo Total': sum_consumptions}) jsonify,
+    return Response(
+        json.dumps({"consumptions": sum_consumptions}),
+        mimetype="application/json"
+                    )

@@ -11,7 +11,7 @@
             Agregar eletrodomestico: <input type="button" onclick="addElement()" value="+">
         </div>
         
-        <form action="{{url_for('electrodomesticos')}}" method="POST">
+        <form action="{{url_for('home_appliances')}}" method="POST">
             <input type="hidden" id="resultInput">
 
         </form>
@@ -26,6 +26,7 @@
     var id = 0
 
     function addElement() {
+        // Creamos cada grupo de campos y su id
 
         id = id + 1
 
@@ -35,9 +36,11 @@
         // creamos nuestros elementos
         var homeApplianceInput = document.createElement("input");
         var consumptionInput = document.createElement("input");
-        var quantityInput = document.createElement("input");
-        var categorySelect = document.createElement("select");
         var timeInput = document.createElement("input");
+        var categorySelect = document.createElement("select");
+        var quantityInput = document.createElement("input");
+        
+        
         
 
         // Establecemos el tipo
@@ -53,6 +56,17 @@
         quantityInput.id = "quantity_"+id
         categorySelect.id = "category_"+id
         timeInput.id = "time_"+id
+
+
+        // Establecer el nombre por defecto o atributo de un campo de texto
+        homeApplianceInput.placeholder = "Electrodoméstico"
+        consumptionInput.placeholder = "Consumo del electrodoméstico"
+        timeInput.placeholder = "Horas diarias de trabajo"
+        quantityInput.placeholder = "Cantidad de electrodoméstico"
+
+        // Establecer campo obligatorio
+        consumptionInput.required = true;
+        timeInput.required = true;
 
 
         // Establecemos los valores del select
@@ -75,19 +89,22 @@
         // Se lo anexamos al contenedor
         currentDiv.appendChild(homeApplianceInput);
         currentDiv.appendChild(consumptionInput);
-        currentDiv.appendChild(quantityInput);
-        currentDiv.appendChild(categorySelect);
         currentDiv.appendChild(timeInput);
+        currentDiv.appendChild(categorySelect);
+        currentDiv.appendChild(quantityInput);
+        
+        
 
         // añade el elemento creado y su contenido al DOM
         
     } 
         
-    function endElement(jsonEnvio) {
-        var jsonEnvio = []
+    function endElement() {
+        // Armamos la lista de todos los campos para luego convertirá en el json y enviarla 
+        var listsJson = []
         for (var i = 1; i <= id; i++) {
             
-            jsonEnvio.push({
+            listsJson.push({
                 "consumption": Number(document.getElementById("consumption_"+i).value),
                 "consumptions_hour": Number(document.getElementById("time_"+i).value),
                 "power_factor_type": Number(document.getElementById("category_"+i).value),
@@ -97,8 +114,8 @@
 
         var resultInput = document.getElementById("resultId");
 
-        var envioJson = JSON.stringify({
-                "homeAppliances": jsonEnvio
+        var sendJson = JSON.stringify({
+                "homeAppliances": listsJson
                 });
                 
         var myHeaders = new Headers();
@@ -108,11 +125,11 @@
         var requestOptions = {
         method: 'POST',
         headers: myHeaders,
-        body: envioJson,
+        body: sendJson,
         redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:5000/electrodomesticos", requestOptions)
+        fetch("http://127.0.0.1:5000/Homeappliances", requestOptions)
         .then(response => response.text())
         .then(result => resultInput.value = JSON.parse(result)["consumptions"])
         .catch(error => console.log('error', error));
