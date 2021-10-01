@@ -17,9 +17,8 @@
         </form>
 
         <input type="submit" onclick="endElement()" value="Calcular">
-        <div>
-            <h3>{{ sum_consumptions }}</h3>
-        </div>
+
+        <input type="text" id="resultId"> 
         
     </div>
 </body>
@@ -94,7 +93,10 @@
                 "power_factor_type": Number(document.getElementById("category_"+i).value),
                 "qty": Number( document.getElementById("quantity_"+i).value)
             });
-            } 
+            }
+
+        var resultInput = document.getElementById("resultId");
+
         var envioJson = JSON.stringify({
                 "homeAppliances": jsonEnvio
                 });
@@ -103,18 +105,18 @@
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", "Basic QWRtaW46MTIzNDU=");
 
-        var raw = envioJson;
         var requestOptions = {
         method: 'POST',
         headers: myHeaders,
-        body: raw,
+        body: envioJson,
         redirect: 'follow'
         };
 
         fetch("http://127.0.0.1:5000/electrodomesticos", requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
+        .then(result => resultInput.value = JSON.parse(result)["consumptions"])
         .catch(error => console.log('error', error));
+        
         }
 
 </script>
