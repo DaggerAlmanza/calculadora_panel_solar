@@ -34,9 +34,13 @@ def home_appliances() -> json:
     if request.method == "POST":
         home_appliances = request.get_json()
         sum_consumptions: float = 0
+        sum_panel: float = 0
         for home_appliance in home_appliances["homeAppliances"]:
             household_appliance = HomeAppliance(**home_appliance)
             sum_consumptions += household_appliance.get_consume()
+        sum_panel = (sum_consumptions*1.3)/(
+                                    int(home_appliances["solarPanel"])*4)
+        print(sum_panel)
     return Response(
         json.dumps({"consumptions": sum_consumptions}),
         mimetype="application/json"
