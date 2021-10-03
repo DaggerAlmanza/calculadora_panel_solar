@@ -12,13 +12,13 @@
         </div>
         
         <form action="{{url_for('home_appliances')}}" method="POST">
-            Paneles solares: <input type="text" id="wattpanel" placeholder="Valor en watt">
+            Paneles solares, capacidad (W): <input type="text" id="wattpanel" placeholder="Valor en watt">
 
         </form>
 
         <input type="submit" onclick="endElement()" value="Calcular">
         Cantidad de paneles: <input type="text" id="resultIdPanel"> 
-        Amperio hora de la bateria: <input type="text" id="resultIdBattery">
+        Capacidad de la batería (Amperio/hora): <input type="text" id="resultIdBattery">
         Inversor Solar potencia mayor a (W): <input type="text" id="resultIdWattP">
     </div>
 </body>

@@ -32,7 +32,9 @@ def home_appliances() -> json:
     }
     , procesamos la información y devolvemos un json.
     sum_panel: cantidad de paneles solares
-
+    intensity_daily: corriente diaria, batería de 48 voltios
+    battery_bank_current: Banco de batería para la alimentación del inversor (amperios/horas)
+    panels_watt: Potencia mínima del inversor en su defecto que sea mucho mayor al valor dado
     """
     if request.method == "POST":
         home_appliances = request.get_json()
@@ -55,10 +57,8 @@ def home_appliances() -> json:
 
         intensity_daily = (sum_consumptions/48)
         battery_bank_current = (2*intensity_daily)/0.7
-        print(intensity_daily, battery_bank_current)
 
         panels_watt = sum_panel*value_panels
-        print(panels_watt)
 
     return Response(
         json.dumps(
