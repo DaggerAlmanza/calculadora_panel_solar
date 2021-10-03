@@ -61,6 +61,11 @@ def home_appliances() -> json:
         print(panels_watt)
 
     return Response(
-        json.dumps({"consumptions": sum_panel}),
+        json.dumps(
+            {
+                "consumptions": sum_panel,
+                "batterybank": battery_bank_current
+            }
+                ),
         mimetype="application/json"
                     )

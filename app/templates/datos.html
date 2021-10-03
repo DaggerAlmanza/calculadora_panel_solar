@@ -17,7 +17,8 @@
         </form>
 
         <input type="submit" onclick="endElement()" value="Calcular">
-        cantidad de paneles: <input type="text" id="resultId"> 
+        Cantidad de paneles: <input type="text" id="resultIdPanel"> 
+        Amperio hora de la bateria: <input type="text" id="resultIdBattery">
     </div>
 </body>
 <script>
@@ -104,7 +105,8 @@
             });
             }
 
-        var resultInput = document.getElementById("resultId");
+        var resultInputPanel = document.getElementById("resultIdPanel");
+        var resultInputBattery = document.getElementById("resultIdBattery");
         var valueInput = document.getElementById("wattpanel").value;
 
         var sendJson = JSON.stringify({
@@ -125,7 +127,9 @@
 
         fetch("http://127.0.0.1:5000/Homeappliances", requestOptions)
         .then(response => response.text())
-        .then(result => resultInput.value = JSON.parse(result)["consumptions"])
+        .then(result => (resultInputPanel.value = JSON.parse(result)["consumptions"],
+                resultInputBattery.value = JSON.parse(result)["batterybank"]))
+        // .then()
         .catch(error => console.log('error', error));
         
         }
