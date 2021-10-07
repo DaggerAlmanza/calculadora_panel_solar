@@ -1,7 +1,6 @@
 import json
-import math
 from flask import Flask, request, render_template, url_for, Response
-from core.models import HomeAppliance
+from core.models import HomeAppliance, Paneles
 
 
 app = Flask(__name__)
@@ -39,26 +38,16 @@ def home_appliances() -> json:
     if request.method == "POST":
         home_appliances = request.get_json()
         sum_consumptions: float = 0
-        sum_panel: float = 0
-        intensity_daily: float = 0
         panels_watt: float = 0
         value_panels = int(home_appliances["solarPanel"])
         for home_appliance in home_appliances["homeAppliances"]:
             household_appliance = HomeAppliance(**home_appliance)
             sum_consumptions += household_appliance.get_consume()
-
-        sum_panel = (sum_consumptions*1.3)/(value_panels*4)
-        decimal_part, all_in_one_parte = math.modf(sum_panel)
-
-        if decimal_part >= 0.5:
-            sum_panel = all_in_one_parte + 1
-        else:
-            sum_panel = all_in_one_parte
-
-        intensity_daily = (sum_consumptions/48)
-        battery_bank_current = (2*intensity_daily)/0.7
-
-        panels_watt = sum_panel*value_panels
+        values_operation = Paneles(sum_consumptions, value_panels)
+        (sum_panel,
+            panels_watt,
+            battery_bank_current) = values_operation.get_intensity()
+        print(sum_panel)
 
     return Response(
         json.dumps(
