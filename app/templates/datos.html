@@ -127,7 +127,7 @@
         redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:5000/Homeappliances", requestOptions)
+        fetch("http://127.0.0.1:5000/homeappliances", requestOptions)
         .then(response => response.text())
         .then(result => (resultInputPanel.value = JSON.parse(result)["panelquantity"],
                 resultInputBattery.value = JSON.parse(result)["batterybank"],

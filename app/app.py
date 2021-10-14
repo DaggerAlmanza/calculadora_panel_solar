@@ -1,6 +1,8 @@
 import json
-from flask import Flask, request, render_template, url_for, Response
-from core.models import HomeAppliance, Paneles
+
+from flask import Flask, request, render_template, Response
+from core.processors import Calculator
+from app.login import hash_email_password, reverse_hash_email_password
 
 
 app = Flask(__name__)
@@ -14,7 +16,25 @@ def portada():
     return render_template("datos.html")
 
 
-@app.route("/Homeappliances", methods=["POST"])
+@app.route("/login", methods=["POST"])
+def login() -> json:
+    """
+    Abrimos nuestra Login
+    """
+    if request.method == "POST":
+        login_password = request.get_json()
+        print(login_password)
+        email_hash, password_hash = hash_email_password(**login_password)
+        print(email_hash, password_hash)
+        (reverse_email_hash,
+            reverse_password_hash) = reverse_hash_email_password(
+                email_hash, password_hash)
+        print(reverse_email_hash, reverse_password_hash)
+
+    return render_template("login.html")
+
+
+@app.route("/homeappliances", methods=["POST"])
 def home_appliances() -> json:
     """
     Recibimos un json con la siguiente estructura:
@@ -26,7 +46,7 @@ def home_appliances() -> json:
                 "consumptions_hour": 3,
                 "power_factor_type": 0.85,
                 "qty": 3
-            }, + dict 
+            }, + ... 
         ]	
     }
     , procesamos la información y devolvemos un json.
@@ -37,25 +57,9 @@ def home_appliances() -> json:
     """
     if request.method == "POST":
         home_appliances = request.get_json()
-        sum_consumptions: float = 0
-        panels_watt: float = 0
-        value_panels = int(home_appliances["solarPanel"])
-        for home_appliance in home_appliances["homeAppliances"]:
-            household_appliance = HomeAppliance(**home_appliance)
-            sum_consumptions += household_appliance.get_consume()
-        values_operation = Paneles(sum_consumptions, value_panels)
-        (sum_panel,
-            panels_watt,
-            battery_bank_current) = values_operation.get_intensity()
-        print(sum_panel)
+        calculator_response = Calculator.calculate(home_appliances)
 
     return Response(
-        json.dumps(
-            {
-                "panelquantity": sum_panel,
-                "batterybank": battery_bank_current,
-                "inverterpower": panels_watt
-            }
-                ),
+        json.dumps(calculator_response),
         mimetype="application/json"
                     )
