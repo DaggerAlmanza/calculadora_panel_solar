@@ -6,11 +6,11 @@ connect(host="mongodb://dgadmin:r1e5o6c7eDr9Gg.Lel@127.0.0.1:27017/calculator")
 
 
 class HomeAppliance(EmbeddedDocument):
+    homeAppliance = StringField(default="TV")
     consumption = IntField(required=True)
     consumptions_hour = IntField(required=True)
     power_factor_type = FloatField(required=True)
     qty = IntField(required=True)
-    home_appliances = StringField(default="TV")
 
 
 class HomeAppliances(Document):
@@ -21,3 +21,8 @@ class ValueCalculator(Document):
     panelquantity = IntField(required=True)
     batterybank = FloatField(required=True)
     inverterpower = FloatField(requiter=True)
+
+
+class User(Document):
+    email = StringField(required=True, unique=True)
+    password = StringField(required=True)

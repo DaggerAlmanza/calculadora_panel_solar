@@ -99,6 +99,7 @@
         for (var i = 1; i <= id; i++) {
             
             listsJson.push({
+                "homeAppliance": document.getElementById("homeAppliance_"+i).value,
                 "consumption": Number(document.getElementById("consumption_"+i).value),
                 "consumptions_hour": Number(document.getElementById("time_"+i).value),
                 "power_factor_type": Number(document.getElementById("category_"+i).value),
@@ -109,7 +110,7 @@
         var resultInputPanel = document.getElementById("resultIdPanel");
         var resultInputBattery = document.getElementById("resultIdBattery");
         var resultInputWattP = document.getElementById("resultIdWattP");
-        var valueInput = document.getElementById("wattpanel").value;
+        var valueInput = Number(document.getElementById("wattpanel").value);
 
         var sendJson = JSON.stringify({
                 "homeAppliances": listsJson,

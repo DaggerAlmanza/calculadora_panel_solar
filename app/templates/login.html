@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeApplience</title>
+    <style>
+        .agregar {
+          background-color: #0446fd;
+          border: none;
+          color: white;
+          padding: 8px 6px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 2px 1px;
+          cursor: pointer;
+        }
+        </style>
+</head>
+
+<body>
+    <div>
+        <form action="{{url_for('login')}}" method="POST" id="idLogin">
+            Email <input type="email" id="email" placeholder="Email" required>
+            Contraseña <input type="password" id="contraseña" placeholder="Contraseña" required>
+            Repita contraseña <input type="password" id="contraseñaR" placeholder="Repita contraseña" required>
+            <input type="button" value="Registrar" onclick="loginHomeAppliance()">
+        </form>
+        
+    </div>
+    
+
+</body>
+
+
+<script>
+    function loginHomeAppliance(){
+        
+        var resultEmail = document.getElementById("email").value;
+        var resultPassword = document.getElementById("contraseña").value;
+        var resultPasswordR = document.getElementById("contraseñaR").value;
+        console.log(resultEmail, resultPassword, resultPasswordR)
+        
+        if( resultPassword == resultPasswordR){
+            
+            var sendJson = JSON.stringify({
+                "email": resultEmail,
+                "password": resultPassword
+                });
+            console.log(sendJson)    
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Basic QWRtaW46MTIzNDU=");
+
+            var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: sendJson,
+            redirect: 'follow'
+            };
+            alert("Ha sido regristrado correctamente")
+            // window.location = "datos.html";
+            fetch("http://127.0.0.1:5000/login", requestOptions)
+            .then(response => response.text())
+            // .then(result => (resultInputPanel.value = JSON.parse(result)["panelquantity"],
+            //         resultInputBattery.value = JSON.parse(result)["batterybank"],
+            //         resultInputWattP.value = JSON.parse(result)["inverterpower"]
+            //         ))
+            // .then()
+            .catch(error => console.log('error', error));
+        }
+        else{
+            alert("Verifique su contraseña, no son iguales")
+            window.location = "login.html";
+        }
+        
+    }
+    
+</script>
+
+
+</html>

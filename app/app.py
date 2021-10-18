@@ -1,8 +1,7 @@
 import json
 
 from flask import Flask, request, render_template, Response
-from core.processors import Calculator
-from app.login import hash_email_password, reverse_hash_email_password
+from core.processors import Calculator, Login
 
 
 app = Flask(__name__)
@@ -24,12 +23,8 @@ def login() -> json:
     if request.method == "POST":
         login_password = request.get_json()
         print(login_password)
-        email_hash, password_hash = hash_email_password(**login_password)
-        print(email_hash, password_hash)
-        (reverse_email_hash,
-            reverse_password_hash) = reverse_hash_email_password(
-                email_hash, password_hash)
-        print(reverse_email_hash, reverse_password_hash)
+        response_login = Login().login_email_password(**login_password)
+        print(response_login)
 
     return render_template("login.html")
 
@@ -42,6 +37,7 @@ def home_appliances() -> json:
         "homeAppliances":
         [
             {
+                "homeAppliance": XXX,
                 "consumption": 40,
                 "consumptions_hour": 3,
                 "power_factor_type": 0.85,
@@ -57,6 +53,7 @@ def home_appliances() -> json:
     """
     if request.method == "POST":
         home_appliances = request.get_json()
+        print(home_appliances)
         calculator_response = Calculator.calculate(home_appliances)
 
     return Response(
