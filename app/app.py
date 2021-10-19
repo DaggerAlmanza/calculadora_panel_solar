@@ -1,10 +1,15 @@
 import json
 
-from flask import Flask, request, render_template, Response
+from flask import Flask, request, render_template,\
+    Response, url_for, session, redirect
+from core.models import Config
 from core.processors import Calculator, Login
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
+# app.secret_key = "r1e5o6c7eDr9Gg.Lel"
+# app.config['SESSION_TYPE'] = "dgadmin"
 
 
 @app.route("/")
@@ -12,6 +17,19 @@ def portada():
     """
     Abrimos nuestra página principal 
     """
+    return render_template("login.html")
+
+
+@app.route("/registrar", methods=["POST"])
+def register() -> json:
+    """
+    Abrimos nuestra Login
+    """
+    if request.method == "POST":
+        login_password = request.get_json()
+        response_login = Login().register_email_password(**login_password)
+        print(response_login)
+
     return render_template("datos.html")
 
 
@@ -23,10 +41,12 @@ def login() -> json:
     if request.method == "POST":
         login_password = request.get_json()
         print(login_password)
-        response_login = Login().login_email_password(**login_password)
-        print(response_login)
+        Login().login_email_password(**login_password)
 
-    return render_template("login.html")
+        return render_template("datos.html")
+
+    else:
+        return render_template("login.html")
 
 
 @app.route("/homeappliances", methods=["POST"])
@@ -51,6 +71,9 @@ def home_appliances() -> json:
     battery_bank_current: Banco de batería para la alimentación del inversor (amperios/horas)
     panels_watt: Potencia mínima del inversor en su defecto que sea mucho mayor al valor dado
     """
+    if not session.get("email") and not session.get("password"):
+        return redirect(url_for("login"))
+
     if request.method == "POST":
         home_appliances = request.get_json()
         print(home_appliances)

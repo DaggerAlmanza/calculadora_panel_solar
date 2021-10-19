@@ -3,8 +3,8 @@ import math
 
 from adapters.home_appliances_adapter import HomeAppliancesAdapter
 from core.models import HomeAppliances, User, ValueCalculator
-from mongoengine.errors import NotUniqueError
-from werkzeug.security import generate_password_hash
+from flask import session
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class HomeAppliance(HomeAppliancesAdapter):
@@ -69,6 +69,7 @@ class Paneles():
 class Calculator():
     @staticmethod
     def calculate(home_appliances: list):
+
         sum_consumptions: float = 0
         panels_watt: float = 0
         value_panels = int(home_appliances["solarPanel"])
@@ -94,7 +95,7 @@ class Calculator():
 
 class Login():
 
-    def login_email_password(self, email, password):
+    def register_email_password(self, email, password):
 
         password_hash = generate_password_hash(password, method='sha256')
         response = {
@@ -103,10 +104,23 @@ class Login():
             }
         values_login = User(**response)
 
-        try:
-            values_login.save()
+        query_email = User.objects(email=response["email"])
 
-        except NotUniqueError:
+        if query_email:
             return "Usuario existente"
         else:
+            values_login.save()
             return "Exitoso"
+
+    def login_email_password(self, email, password):
+
+        query_email = User.objects(email=email).first()
+        print(query_email["id"])
+        query_password = query_email["password"]
+        print(query_email["email"])
+
+        if check_password_hash(query_password, password):
+            print("Hecho 1")
+            session["email"] = User.email
+            session["password"] = User.password
+            print("Hecho 2")
