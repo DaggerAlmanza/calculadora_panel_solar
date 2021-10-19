@@ -2,14 +2,11 @@ import json
 
 from flask import Flask, request, render_template,\
     Response, url_for, session, redirect
-from core.models import Config
 from core.processors import Calculator, Login
 
 
 app = Flask(__name__)
-app.config.from_object(Config)
-# app.secret_key = "r1e5o6c7eDr9Gg.Lel"
-# app.config['SESSION_TYPE'] = "dgadmin"
+app.secret_key = "r1e5o6c7eDr9Gg.Lel"
 
 
 @app.route("/")

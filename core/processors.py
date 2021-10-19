@@ -120,7 +120,5 @@ class Login():
         print(query_email["email"])
 
         if check_password_hash(query_password, password):
-            print("Hecho 1")
-            session["email"] = User.email
-            session["password"] = User.password
-            print("Hecho 2")
+            session["email"] = query_email["email"]
+            session["password"] = query_email["password"]
